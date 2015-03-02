@@ -1,7 +1,8 @@
 (function() {
 	var express = require('express'),
 		morgan = require('morgan'),
-		swig = require('swig');
+		swig = require('swig'),
+		routes = require(__dirname + '/routes');
 
 	var app = express();
 
@@ -9,15 +10,12 @@
 
 	app.engine('html', swig.renderFile);
 	app.set('view engine', 'html');
-	app.set('views', process.cwd() + '/views');
+	app.set('views', __dirname + '/views');
 
 	swig.setDefaults({ cache: false });
 
-	var people = [{name: 'Full'}, {name: 'Stacker'}, {name: 'Son'}];
-	app.get('/', function(req, res) {
-		res.render( 'index', {title: 'Hall of Fame', people: people} );
-	});
-
+	app.use(express.static(__dirname + '/public'));
+	app.use(routes);
 
 	var server = app.listen(3000, function() {
 		console.log('server listening');
