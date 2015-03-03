@@ -3,7 +3,10 @@
 	data = [];
 
 	var add = function(name, text) {
-		data.push({ name: name, text: text });
+		data.push({ 
+			id: String(Math.floor(Math.random() * 1000000000)),
+			name: name,
+			text: text });
 	};
 
 	var list = function() {
