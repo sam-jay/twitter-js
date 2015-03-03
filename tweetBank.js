@@ -3,10 +3,13 @@
 	data = [];
 
 	var add = function(name, text) {
-		data.push({ 
+		var tweet = { 
 			id: String(Math.floor(Math.random() * 1000000000)),
 			name: name,
-			text: text });
+			text: text
+		};
+		data.push(tweet);
+		return tweet;
 	};
 
 	var list = function() {

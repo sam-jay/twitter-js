@@ -3,6 +3,7 @@
 		morgan = require('morgan'),
 		swig = require('swig'),
 		bodyParser = require('body-parser'),
+		socketio = require('socket.io'),
 		routes = require(__dirname + '/routes');
 
 	var app = express();
@@ -17,11 +18,14 @@
 
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
-	
-	app.use(express.static(__dirname + '/public'));
-	app.use(routes);
 
 	var server = app.listen(3000, function() {
 		console.log('server listening');
 	});
+	var io = socketio.listen(server);
+
+	app.use(express.static(__dirname + '/public'));
+	var router = routes(io);
+	app.use('/', router);
+
 })();
